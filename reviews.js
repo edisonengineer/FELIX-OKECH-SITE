@@ -16,7 +16,7 @@
        counted in the star-rating summary. Delete them once replaced.
 
      Fields: name, location, service, system (list), photos (list),
-             rating (1–5, optional), text (optional), date ("Mon YYYY") */
+             rating (1–5, decimals allowed e.g. 4.7, optional), text (optional), date ("Mon YYYY") */
   const REVIEWS = [
     {
       name: "Lawrence G.",
@@ -24,8 +24,8 @@
       service: "Hybrid solar system with lithium storage",
       system: ["12kW hybrid inverter", "11.67kWh lithium battery (LVTS-512228)", "6 × 610W solar panels (3.66kWp)"],
       photos: ["images/reviews/lawrence-3.jpg", "images/reviews/lawrence-1.jpg", "images/reviews/lawrence-2.jpg"],
-      // rating: 5,          ← add when Lawrence sends his rating
-      // text: "…",          ← add Lawrence's own words here
+      rating: 4.7,
+      text: "Living out off Kangundo Road, we used to experience frustrating power fluctuations that interrupted our daily activities. Felix and his team came in, assessed our heavy power load, and installed a robust 12kW hybrid system. The workmanship was exceptionally neat, and the transition was seamless. Our entire home now runs reliably on solar, and we don't even notice when the main grid goes down. Worth every penny for the peace of mind!",
     },
     {
       name: "Christopher",
@@ -33,17 +33,17 @@
       service: "Hybrid solar system with lithium storage",
       system: ["3kW hybrid inverter", "5.12kWh lithium battery", "4 × 610W solar panels (2.44kWp)"],
       photos: ["images/reviews/christopher-2.jpg", "images/reviews/christopher-1.jpg"],
-      // rating: 5,          ← add when Christopher sends his rating
-      // text: "…",          ← add Christopher's own words here
+      rating: 4.8,
+      text: "I reached out to Felix looking for an affordable and reliable backup solution for our home in Tala. He didn't try to oversell us; instead, he recommended a 3kW setup that perfectly matched our daily usage. The installation was quick, professional, and he explained how everything works in plain language. The system easily handles our fridge, TV, and lighting during blackouts. Highly recommend his services for anyone looking to switch to solar power.",
     },
     {
-      sample: true,
-      name: "Sample Homeowner",
-      location: "Kasarani, Nairobi",
-      service: "Hybrid inverter & lithium battery",
+      name: "Martin P.",
+      location: "Diani",
+      service: "Commercial hybrid system with lithium storage",
+      system: ["50kW hybrid inverter", "60kWh lithium battery storage", "54 × 620W solar panels (33.48kWp)"],
+      photos: ["images/reviews/martin-1.jpg", "images/reviews/martin-2.jpg", "images/reviews/martin-3.jpg"],
       rating: 5,
-      text: "Replace this with a real client review. Example: Felix assessed our home, explained the options clearly and installed a system that keeps our lights, TV and fridge running during outages.",
-      date: "Sample",
+      text: "We needed a commercial-grade solution to handle the heavy daily energy demands and frequent coastal power outages at our Diani property. Felix designed and delivered a massive 50kW hybrid system paired with 60kWh of lithium storage and a high-yield 54-panel array. The installation was smooth, highly professional, and perfectly calibrated to support our entire operation without a single hiccup during grid failures. His expertise in commercial sizing and technical execution is top-tier.",
     },
   ];
 
@@ -55,6 +55,10 @@
   if (!track) return;
 
   const stars = (n) => "★★★★★".slice(0, n) + "☆☆☆☆☆".slice(0, 5 - n);
+  // Visual star bar that supports decimals (e.g. 4.7 → four and a bit stars)
+  const starBar = (rating) =>
+    `<span class="star-bar" style="--fill:${(Math.max(0, Math.min(5, rating)) / 5) * 100}%" aria-hidden="true">★★★★★</span>`;
+  const fmtRating = (n) => (Number.isInteger(n) ? n.toFixed(1) : String(Math.round(n * 10) / 10));
   const initials = (name) =>
     name
       .split(/\s+/)
@@ -78,8 +82,8 @@
              </button>`
           : ""
       }
-      ${!r.sample && !hasReview ? '<span class="verified-tag">✓ Verified installation</span>' : ""}
-      ${r.rating ? `<div class="review-stars" aria-label="${r.rating} out of 5 stars">${stars(r.rating)}</div>` : ""}
+      ${!r.sample ? `<span class="verified-tag">✓ ${hasReview ? "Verified client" : "Verified installation"}</span>` : ""}
+      ${r.rating ? `<div class="review-stars" role="img" aria-label="Rated ${fmtRating(r.rating)} out of 5">${starBar(r.rating)}<span class="rating-num">${fmtRating(r.rating)}</span></div>` : ""}
       ${hasReview ? `<blockquote>“${escapeHTML(r.text)}”</blockquote>` : ""}
       ${
         r.system && r.system.length
@@ -102,7 +106,7 @@
   if (real.length) {
     const avg = real.reduce((s, r) => s + r.rating, 0) / real.length;
     $("#rsScore").textContent = avg.toFixed(1);
-    $("#rsStars").textContent = stars(Math.round(avg));
+    $("#rsStars").innerHTML = starBar(avg);
     $("#rsCount").textContent = `from ${real.length} client review${real.length === 1 ? "" : "s"}`;
     $("#ratingSummary").hidden = false;
   }

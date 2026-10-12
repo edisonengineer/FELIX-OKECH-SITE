@@ -878,3 +878,14 @@ svg.wa-icon, .wa-float svg { fill: currentColor; stroke: none; }
   .lb-next { right: calc(50% - 64px); }
   .lb-figure img { max-height: calc(100vh - 10rem); max-height: calc(100dvh - 10rem); }
 }
+
+/* Partial-star rating bar (supports e.g. 4.7) */
+.review-stars { display: flex; align-items: center; gap: .5rem; letter-spacing: 0; }
+.star-bar {
+  display: inline-block; font-size: 1.15rem; letter-spacing: 3px; line-height: 1;
+  background: linear-gradient(90deg, var(--yellow-500) var(--fill), var(--slate-200) var(--fill));
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.rating-num { font-weight: 700; font-size: .9rem; color: var(--navy-900); }
+.rs-stars .star-bar { font-size: 1.2rem; }
+.review-card.has-photo blockquote { font-size: .94rem; }
