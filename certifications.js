@@ -41,6 +41,7 @@
       detail: "Products & solutions, system planning and installation. Held at Royal Tulip Canaan, Nairobi.",
       topics: ["Lithium (LiFePO4) batteries", "System planning", "Installation"],
       image: "images/certificates/freedom-won-lifepo4.jpg",
+      pdf: "certificates/freedom-won-lifepo4-training.pdf",
     },
   ];
 
