@@ -759,7 +759,45 @@
     }
   });
 
-  /* ---------- Category filters ---------- */
+  /* ---------- Category filters & search ---------- */
+  const searchInput = $("#productSearch");
+  const searchClear = $("#searchClear");
+  const searchEmpty = $("#searchEmpty");
+  let activeFilter = "all";
+
+  // Everything a visitor might type: name, model, category, description, features and specs
+  const squash = (s) => s.toLowerCase().replace(/[\s\-_.,·×]+/g, "");
+  const searchText = Object.fromEntries(
+    PRODUCTS.map((p) => {
+      const text = [p.name, p.model, p.categoryLabel, p.short, p.badge, ...(p.features || []), ...Object.values(p.specs || {})]
+        .filter(Boolean)
+        .join(" ")
+        .toLowerCase();
+      return [p.id, text + " " + squash(text)];
+    })
+  );
+
+  function applyFilters() {
+    // "48 v" → "48v"; numbers only match whole values, so "6kw" doesn't find "16kW"
+    const words = searchInput.value
+      .toLowerCase()
+      .replace(/(\d)\s+(?=[a-z])/g, "$1")
+      .split(/\s+/)
+      .filter(Boolean)
+      .map((w) => new RegExp("(?<![\\d.])" + squash(w).replace(/[.*+?^${}()|[\]\\]/g, "\\$&")));
+    let shown = 0;
+    $$(".product-card", grid).forEach((card) => {
+      const text = searchText[card.dataset.id];
+      const match =
+        (activeFilter === "all" || card.dataset.category === activeFilter) &&
+        words.every((w) => w.test(text));
+      card.classList.toggle("hidden", !match);
+      if (match) shown++;
+    });
+    searchClear.hidden = !words.length;
+    searchEmpty.hidden = shown > 0;
+  }
+
   $("#filters").addEventListener("click", (e) => {
     const btn = e.target.closest(".filter");
     if (!btn) return;
@@ -768,10 +806,15 @@
       b.classList.toggle("active", on);
       b.setAttribute("aria-selected", String(on));
     });
-    const f = btn.dataset.filter;
-    $$(".product-card", grid).forEach((card) => {
-      card.classList.toggle("hidden", f !== "all" && card.dataset.category !== f);
-    });
+    activeFilter = btn.dataset.filter;
+    applyFilters();
+  });
+
+  searchInput.addEventListener("input", applyFilters);
+  searchClear.addEventListener("click", () => {
+    searchInput.value = "";
+    applyFilters();
+    searchInput.focus();
   });
 
   /* ---------- Product modal ---------- */

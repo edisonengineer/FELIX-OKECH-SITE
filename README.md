@@ -8,7 +8,7 @@ Plain HTML, CSS and JavaScript. No build step and no dependencies apart from Goo
 
 - Sticky, responsive navigation with a mobile menu and active-section highlighting
 - Hero section with a "Browse Solar Products" call to action
-- Product catalog (8 products) with category filters
+- Product catalog with category filters and a search bar (matches name, model, capacity, voltage and specs)
 - Hover overlay on each card with **Add to Cart** and **Order on WhatsApp**. On touch screens these buttons are always visible.
 - Product detail modal: large image, description, key features, technical specification table, price, **Order on WhatsApp** and **Contact for Installation** buttons. It closes with the X button, the Escape key or a click on the backdrop.
 - Cart drawer: change quantities, see a running total and **check out on WhatsApp** with an itemised order message. The cart is kept in `localStorage`.
