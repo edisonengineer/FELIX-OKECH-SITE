@@ -25,6 +25,7 @@ Plain HTML, CSS and JavaScript. No build step and no dependencies apart from Goo
 | `styles.css` | Design system and responsive layout |
 | `script.js` | Product data, rendering, modal, cart and WhatsApp links |
 | `assessment.js` | Energy assessment form, sizing estimate and submission |
+| `certifications.js` | Certifications & training cards |
 | `reviews.js` | Client reviews list, photo gallery and "Leave a Review" form |
 | `images/reviews/` | Client installation photos |
 | `.nojekyll` | Tells GitHub Pages to serve the files as they are |
@@ -42,6 +43,9 @@ All settings are at the top of `script.js`:
 
 ### Client installation photos
 Review photos live in `images/reviews/` with lowercase, no-space names (e.g. `lawrence-1.jpg`). Reference them in the `photos` list of the client's entry in `reviews.js`. The first photo is the cover; visitors click it to open a full-screen gallery.
+
+### Certificates
+Certificates are listed in `certifications.js` (the `CERTIFICATES` list at the top). Each needs a JPG picture in `images/certificates/`, plus an optional PDF in `certificates/` for the "Download PDF" button. Visitors tap a certificate to view it full screen.
 
 ### Adding real client reviews
 Open `reviews.js` and edit the `REVIEWS` list at the top. When a client sends a review through the website you get an email with their name, location, rating and text; copy those into a new entry. Delete the three `sample: true` entries once you have real reviews. Sample cards are tagged "Sample" and are left out of the star-rating summary, which only appears once real reviews exist.

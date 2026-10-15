@@ -130,22 +130,33 @@
   let lbIndex = 0;
   let lbReturn = null;
 
+  // lbReview = { photos: [...], label: "Caption text", alt: "Image description" }
   function showPhoto(n) {
     const photos = lbReview.photos;
     lbIndex = (n + photos.length) % photos.length;
     lbImg.src = photos[lbIndex];
-    lbImg.alt = `Solar installation for ${lbReview.name}, ${lbReview.location} (photo ${lbIndex + 1} of ${photos.length})`;
-    lbCap.textContent = `${lbReview.name} · ${lbReview.location} — ${lbIndex + 1} / ${photos.length}`;
+    lbImg.alt = `${lbReview.alt} (${lbIndex + 1} of ${photos.length})`;
+    lbCap.textContent = photos.length > 1 ? `${lbReview.label} — ${lbIndex + 1} / ${photos.length}` : lbReview.label;
     $$(".lb-nav", lightbox).forEach((b) => (b.hidden = photos.length < 2));
   }
-  function openLightbox(i) {
-    lbReview = REVIEWS[i];
+  function openGallery(gallery) {
+    lbReview = gallery;
     lbReturn = document.activeElement;
     showPhoto(0);
     lightbox.hidden = false;
     document.body.classList.add("no-scroll");
     $(".lb-close", lightbox).focus();
   }
+  function openLightbox(i) {
+    const r = REVIEWS[i];
+    openGallery({
+      photos: r.photos,
+      label: `${r.name} · ${r.location}`,
+      alt: `Solar installation for ${r.name}, ${r.location}`,
+    });
+  }
+  // Let other sections (e.g. certifications) reuse the same viewer
+  window.FelixSite.openGallery = openGallery;
   function closeLightbox() {
     lightbox.hidden = true;
     document.body.classList.remove("no-scroll");
