@@ -12,8 +12,19 @@
      2. Optional: put the original PDF in the certificates/ folder.
      3. Copy one { ... } entry below (newest first) and update the details.
 
-     Fields: title, issuer, date, detail, topics (list), image, pdf (optional) */
+     Fields: title, issuer, date, detail, topics (list), image, pdf (optional),
+             thumb (optional: a cropped picture for the card; `image` opens full screen) */
   const CERTIFICATES = [
+    {
+      title: "Solar Photovoltaic Technician License (Class T3)",
+      issuer: "Energy and Petroleum Regulatory Authority (EPRA), Kenya",
+      issuerShort: "EPRA",
+      date: "October 2026",
+      detail: "Licensed to install, test, inspect and commission solar PV systems, including grid-connected and hybrid systems. Valid until October 2027.",
+      topics: ["Installation & testing", "Inspection & commissioning", "Grid-connected & hybrid PV"],
+      image: "images/certificates/epra-solar-pv-t3-license.jpg",
+      thumb: "images/certificates/epra-solar-pv-t3-license-front.jpg",
+    },
     {
       title: "Regional Training on Microgrids",
       issuer: "East African Centre of Excellence for Renewable Energy and Efficiency (EACREEE)",
@@ -53,7 +64,7 @@
     (c, i) => `
     <article class="cert-card">
       <button type="button" class="cert-thumb" data-cert="${i}" aria-label="View certificate: ${escapeHTML(c.title)}">
-        <img src="${escapeHTML(c.image)}" alt="Certificate: ${escapeHTML(c.title)}, ${escapeHTML(c.issuerShort)}" loading="lazy" />
+        <img src="${escapeHTML(c.thumb || c.image)}" alt="Certificate: ${escapeHTML(c.title)}, ${escapeHTML(c.issuerShort)}" loading="lazy" />
         <span class="cert-zoom" aria-hidden="true">🔍 View</span>
       </button>
       <div class="cert-body">
