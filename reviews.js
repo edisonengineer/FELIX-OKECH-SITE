@@ -45,6 +45,13 @@
       rating: 5,
       text: "We needed a commercial-grade solution to handle the heavy daily energy demands and frequent coastal power outages at our Diani property. Felix designed and delivered a massive 50kW hybrid system paired with 60kWh of lithium storage and a high-yield 54-panel array. The installation was smooth, highly professional, and perfectly calibrated to support our entire operation without a single hiccup during grid failures. His expertise in commercial sizing and technical execution is top-tier.",
     },
+    {
+      name: "Mombasa Installation",
+      location: "Mombasa",
+      service: "Commercial hybrid solar system with battery storage",
+      system: ["50kW hybrid inverter", "110kWh battery storage", "40 × 610W solar panels (24.4kWp)"],
+      photos: ["images/mombasa-50kw-installation.jpg"],
+    },
   ];
 
   const { showToast, sendForm, escapeHTML } = window.FelixSite;
