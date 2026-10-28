@@ -51,6 +51,8 @@
       service: "Commercial hybrid solar system with battery storage",
       system: ["50kW hybrid inverter", "110kWh battery storage", "40 × 610W solar panels (24.4kWp)"],
       photos: ["images/mombasa-50kw-installation.jpg"],
+      rating: 5,
+      text: "A powerful commercial solar installation in Mombasa, featuring a 50kW hybrid inverter, 110kWh of battery storage, and 40 high-output 610W solar panels delivering 24.4kWp of solar capacity. The system combines substantial solar generation with battery backup to support reliable power for demanding energy needs.",
     },
   ];
 
